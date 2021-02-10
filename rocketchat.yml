@@ -1,0 +1,8 @@
+---
+- name: Configure all servers
+  hosts: all
+  roles:
+    - docker
+    - rocketchat.docker
+  # vars:
+  #   rocket_chat_automatic_upgrades: true
