@@ -1,0 +1,12 @@
+---
+- name: Configure all servers
+  hosts: all
+  become: true
+  vars:
+    pip_install_packages:
+      - name: docker
+    docker_package_state: latest
+  roles:
+    - pip
+    - docker
+  #  - rocketchat.docker
