@@ -1,0 +1,14 @@
+---
+
+- name: Create directory for Docker container data.
+  file:
+    path: "{{ docker_data }}"
+    state: directory
+    mode: '0755'
+
+- name: Create the Docker network.
+  docker_network:
+    name: docker-net
+
+- include_tasks: mongo.yml
+- include_tasks: rocketchat.yml

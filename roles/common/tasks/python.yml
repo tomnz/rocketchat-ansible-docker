@@ -1,7 +1,10 @@
 ---
-- name: Ensure Pip is installed.
+- name: Ensure Python is installed.
   package:
-    name: "{{ pip_package }}"
+    name:
+      - python3
+      - python3-setuptools
+      - python3-pip
     state: present
 
 - name: Ensure pip_install_packages are installed.
@@ -10,5 +13,5 @@
     version: "{{ item.version | default(omit) }}"
     virtualenv: "{{ item.virtualenv | default(omit) }}"
     state: "{{ item.state | default(omit) }}"
-    executable: "{{ pip_executable }}"
+    executable: pip3
   with_items: "{{ pip_install_packages }}"

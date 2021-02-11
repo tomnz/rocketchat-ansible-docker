@@ -1,0 +1,41 @@
+---
+# TODO: Create Rocket.Chat-specific user
+
+- name: Create directory for Rocket.Chat container data.
+  file:
+    path: "{{ rocketchat_data }}"
+    state: directory
+    mode: '0755'
+
+- name: Create directory for Rocket.Chat container data (uploads).
+  file:
+    path: "{{ rocketchat_data }}/uploads"
+    state: directory
+    mode: '0755'
+
+- name: Create the Rocket.Chat docker container.
+  docker_container:
+    name: rocketchat
+    image: rocketchat/rocket.chat:latest
+    command: >
+      bash -c
+        "for i in `seq 1 30`; do
+          node main.js &&
+          s=$? && break || s=$?;
+          echo \"Tried $i times. Waiting 5 secs...\";
+          sleep 5;
+        done; (exit $s)"
+    restart_policy: unless-stopped
+    volumes:
+      - "{{ rocketchat_data }}/uploads:/app/uploads"
+    env:
+      PORT: "3000"
+      ROOT_URL: "http://rocketchat:3000"
+      MONGO_URL: "mongodb://mongo:27017/rocketchat"
+      MONGO_OPLOG_URL: mongodb://mongo:27017/local
+    published_ports:
+      - "3000:3000"
+    networks:
+      - name: docker-net
+        links:
+          - mongo
