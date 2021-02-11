@@ -3,11 +3,18 @@
 Assuming a standard cloud VM with an Ubuntu 18.04 LTS image:
 
 - SSH into the VM.
-- `sudo apt-get update -y && sudo apt-get install git python3 python3-setuptools python3-pip -y`
-- `pip3 install ansible`
+- `sudo apt-get update -y && sudo apt-get install git python3 python3-setuptools python3-pip ansible -y`
+- `pip3 install --upgrade pip setuptools`
 - `git clone https://github.com/tomnz/rocketchat-ansible-docker.git`
 - `cd rocketchat-ansible-docker`
 - `ansible-galaxy install -r requirements.yml`
+- `ansible-playbook -v -i hosts.yml playbook.yml`
+
+## Updating
+
+- SSH into the VM.
+- `cd ~/rocketchat-ansible-docker`
+- `git pull`
 - `ansible-playbook -v -i hosts.yml playbook.yml`
 
 ## Testing with Vagrant
