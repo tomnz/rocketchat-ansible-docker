@@ -1,9 +1,0 @@
-[submodule "roles/Rocket.Chat"]
-	path = roles/Rocket.Chat
-	url = https://github.com/RocketChat/Rocket.Chat.Ansible.git
-[submodule "roles/docker"]
-	path = roles/docker
-	url = https://github.com/geerlingguy/ansible-role-docker.git
-[submodule "roles/pip"]
-	path = roles/pip
-	url = https://github.com/geerlingguy/ansible-role-pip.git

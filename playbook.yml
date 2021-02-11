@@ -1,6 +1,6 @@
 ---
 - name: Configure all servers
-  hosts: all
+  hosts: rocketchat
   become: true
   vars:
     pip_install_packages:
