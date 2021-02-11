@@ -5,8 +5,7 @@
   vars:
     pip_install_packages:
       - name: docker
-    docker_package_state: latest
   roles:
-    - pip
+    - common
     - docker
-  #  - rocketchat.docker
+    # - rocketchat.docker

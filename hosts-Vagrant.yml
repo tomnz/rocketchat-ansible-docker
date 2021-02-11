@@ -1,0 +1,5 @@
+all:
+  hosts:
+    rocketchat:
+      # Should match the Vagrant managed-node IP
+      ansible_host: 192.168.33.11

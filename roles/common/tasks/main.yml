@@ -1,0 +1,12 @@
+---
+- name: Update the apt cache if older than an hour.
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+
+- include_tasks: python.yml
+- include_tasks: fail2ban.yml
+
+- name: Clean up apt.
+  apt:
+    autoremove: true
