@@ -3,7 +3,9 @@
 Assuming a standard cloud VM with an Ubuntu 18.04 LTS image:
 
 - SSH into the VM.
-- `sudo apt-get update -y && sudo apt-get install git python3 python3-setuptools python3-pip ansible -y`
+- `sudo apt-get update -y && sudo apt-get install git python3 python3-setuptools python3-pip software-properties-common -y`
+- `sudo apt-add-repository -y --update ppa:ansible/ansible`
+- `sudo apt-get install ansible`
 - `pip3 install --upgrade pip setuptools`
 - `git clone https://github.com/tomnz/rocketchat-ansible-docker.git`
 - `cd rocketchat-ansible-docker`
@@ -19,7 +21,7 @@ Assuming a standard cloud VM with an Ubuntu 18.04 LTS image:
 
 ## Testing with Vagrant
 
-Testing the configuration (both initial setup, and further updates) using [Vagrant](https://www.vagrantup.com/).
+Test the configuration (both initial setup, and further updates) using [Vagrant](https://www.vagrantup.com/).
 
 The `Vagrantfile` defines a two VMs:
 
