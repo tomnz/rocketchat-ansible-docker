@@ -1,5 +1,22 @@
 ---
+# Rocket.Chat configuration
+rocketchat_tld: example.com
+rocketchat_subdomain: chat
+rocketchat_domain: "{{ rocketchat_subdomain }}.{{ rocketchat_tld }}"
+rocketchat_enable_swag: false
+
+# Location for docker-compose configuration
+docker_compose_config_dir: /var/docker-compose
+docker_compose_config: "{{ docker_compose_config_dir }}/docker-compose.yml"
+
+# Primary mount point for docker data directories
 docker_data: /var/docker
+# Per-container directories
 mongo_data: "{{ docker_data }}/mongo"
 rocketchat_data: "{{ docker_data }}/rocketchat"
 swag_data: "{{ docker_data }}/swag"
+
+# Docker image versions
+rocketchat_image_version: latest
+mongo_image_version: "4.4"
+swag_image_version: latest

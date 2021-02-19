@@ -5,6 +5,22 @@
   vars:
     pip_install_packages:
       - name: docker
+      - name: docker-compose
+
+    ############
+    # UPGRADES
+
+    # Docker Compose is installed via direct download - update version manually
+    # https://github.com/docker/compose/releases
+    docker_compose_version: "1.28.3"
+
+    # Uncomment to upgrade Docker Engine from apt
+    # docker_package_state: latest
+
+    rocketchat_image_version: latest
+    mongo_image_version: "4.4"
+    swag_image_version: latest
+
   roles:
     - common
     - docker

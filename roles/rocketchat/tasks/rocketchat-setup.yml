@@ -1,0 +1,14 @@
+---
+# TODO: Create Rocket.Chat-specific user
+
+- name: Create directory for Rocket.Chat container data.
+  file:
+    path: "{{ rocketchat_data }}"
+    state: directory
+    mode: '0755'
+
+- name: Create directory for Rocket.Chat container data (uploads).
+  file:
+    path: "{{ rocketchat_data }}/uploads"
+    state: directory
+    mode: '0755'

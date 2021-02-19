@@ -1,3 +1,23 @@
+## TODO
+
+Remaining work, in no particular order:
+
+- Configure `swag` container for HTTPS forwarding
+- Configure Ansible handlers for service up/down
+- Safe upgrades (explicit trigger with Ansible tag)
+  - Docker
+  - Docker Compose
+  - Rocket.Chat
+  - Mongo
+  - Swag
+- Backups (explicit trigger with Ansible tag)
+  - Mongo data
+  - Save to remote location? Or specific mounted drive
+  - Encryption with PGP or similar?
+- Configure schedule for `git pull` and `ansible-playbook`
+  - Run upgrades
+  - Do backups
+
 ## Deploying
 
 Assuming a standard cloud VM with an Ubuntu 18.04 LTS image:
@@ -21,9 +41,9 @@ Assuming a standard cloud VM with an Ubuntu 18.04 LTS image:
 
 ## Testing with Vagrant
 
-Test the configuration (both initial setup, and further updates) using [Vagrant](https://www.vagrantup.com/).
+Test the configuration (both initial setup, and further updates) locally using [Vagrant](https://www.vagrantup.com/).
 
-The `Vagrantfile` defines a two VMs:
+The `Vagrantfile` defines two VMs:
 
 - `rocketchat` is the main VM which mimics a cloud VM.
 - `controller` is a secondary VM which is used to remotely provision `rocketchat` using the Ansible playbook.
@@ -34,7 +54,7 @@ The `Vagrantfile` defines a two VMs:
 
     vagrant up
 
-Once the node is provisioned, you should now be able to confirm that RocketChat is running at: [http://172.17.177.21:80](http://172.17.177.21:80)
+Once the node is provisioned, you should now be able to confirm that RocketChat is running at: [http://172.17.177.21:3000](http://172.17.177.21:3000)
 
 ### SSH into Rocket.Chat VM for testing
 

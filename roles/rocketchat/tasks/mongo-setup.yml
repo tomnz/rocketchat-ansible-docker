@@ -1,0 +1,20 @@
+---
+# TODO: Create mongo-specific user
+
+- name: Create directory for Mongo container data.
+  file:
+    path: "{{ mongo_data }}"
+    state: directory
+    mode: '0755'
+
+- name: Create directory for Mongo container data (DB).
+  file:
+    path: "{{ mongo_data }}/data/db"
+    state: directory
+    mode: '0755'
+
+- name: Create directory for Mongo container data (dump).
+  file:
+    path: "{{ mongo_data }}/data/dump"
+    state: directory
+    mode: '0755'

@@ -1,0 +1,72 @@
+version: '2'
+
+services:
+  rocketchat:
+    image: rocketchat/rocket.chat:{{ rocketchat_image_version }}
+    command: >
+      bash -c
+        "for i in `seq 1 30`; do
+          node main.js &&
+          s=$$? && break || s=$$?;
+          echo \"Tried $$i times. Waiting 5 secs...\";
+          sleep 5;
+        done; (exit $$s)"
+    restart: unless-stopped
+    volumes:
+      - "{{ rocketchat_data }}/uploads:/app/uploads"
+    environment:
+      - PORT=3000
+      - ROOT_URL=http://localhost:3000
+      - MONGO_URL=mongodb://mongo:27017/rocketchat
+      - MONGO_OPLOG_URL=mongodb://mongo:27017/local
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:{{ mongo_image_version }}
+    command: mongod --oplogSize 128 --replSet rs0 --storageEngine=wiredTiger
+    restart: unless-stopped
+    volumes:
+      - "{{ mongo_data }}/data/db:/data/db"
+      - "{{ mongo_data }}/data/dump:/dump"
+
+  mongo-init-replica:
+    image: mongo:{{ mongo_image_version }}
+    command: >
+      bash -c
+        "for i in `seq 1 30`; do
+          mongo mongo/rocketchat --eval \"
+            rs.initiate({
+              _id: 'rs0',
+              members: [ { _id: 0, host: 'localhost:27017' } ]})\" &&
+          s=$$? && break || s=$$?;
+          echo \"Tried $$i times. Waiting 5 secs...\";
+          sleep 5;
+        done; (exit $$s)"
+    depends_on:
+      - mongo
+
+{% if rocketchat_enable_swag %}
+  swag:
+    image: linuxserver/swag:{{ swag_image_version }}
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Los_Angeles
+      - "URL={{ rocketchat_tld }}"
+      - "SUBDOMAINS={{ rocketchat_subdomain }},"
+      - VALIDATION=http
+      - ONLY_SUBDOMAINS=true
+    restart: unless-stopped
+    volumes:
+      - "{{ swag_data }}:/config"
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - rocketchat
+{% endif %}

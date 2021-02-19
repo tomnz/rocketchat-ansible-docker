@@ -1,0 +1,22 @@
+---
+- name: Create directory for Docker Compose configuration.
+  file:
+    path: "{{ docker_compose_config_dir }}"
+    state: directory
+    mode: '0755'
+
+- name: "Populate Docker Compose configuration."
+  template:
+    src: docker-compose.yml.j2
+    dest: "{{ docker_compose_config }}"
+  notify: restart docker-compose
+
+- name: "Start Docker Compose."
+  docker_compose:
+    project_src: "{{ docker_compose_config_dir }}"
+
+- name: Configure SWAG.
+  template:
+    src: site-confs.default.https.j2
+    dest: "{{ swag_data }}/nginx/site-confs/default"
+  notify: restart swag

@@ -16,5 +16,7 @@ docker_apt_ignore_key_error: false
 docker_apt_gpg_key: https://download.docker.com/linux/{{ ansible_distribution | lower }}/gpg
 
 # A list of users who will be added to the docker group.
-docker_users: []
+docker_users:
+  - "{{ ansible_ssh_user }}"
 
+docker_compose_version: "1.28.3"

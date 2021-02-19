@@ -1,0 +1,14 @@
+---
+# TODO: Create swag-specific user
+
+- name: Create directory for swag container data.
+  file:
+    path: "{{ swag_data }}"
+    state: directory
+    mode: '0755'
+
+- name: Create directory for swag site-confs.
+  file:
+    path: "{{ swag_data }}/nginx/site-confs"
+    state: directory
+    mode: '0755'
