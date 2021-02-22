@@ -1,8 +1,7 @@
 ---
 # Rocket.Chat configuration
-rocketchat_tld: example.com
-rocketchat_subdomain: chat
-rocketchat_domain: "{{ rocketchat_subdomain }}.{{ rocketchat_tld }}"
+# Domain must be a subdomain - the first part will be split off for SWAG config
+rocketchat_domain: chat.example.com
 rocketchat_enable_swag: false
 
 # Location for docker-compose configuration

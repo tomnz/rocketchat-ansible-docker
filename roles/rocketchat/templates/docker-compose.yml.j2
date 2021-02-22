@@ -57,8 +57,8 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=America/Los_Angeles
-      - "URL={{ rocketchat_tld }}"
-      - "SUBDOMAINS={{ rocketchat_subdomain }},"
+      - "URL={{ rocketchat_domain.split('.')[1:] | join('.') }}"
+      - "SUBDOMAINS={{ rocketchat_domain.split('.')[0] }},"
       - VALIDATION=http
       - ONLY_SUBDOMAINS=true
     restart: unless-stopped

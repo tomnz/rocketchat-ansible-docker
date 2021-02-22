@@ -23,14 +23,16 @@ Remaining work, in no particular order:
 Assuming a standard cloud VM with an Ubuntu 18.04 LTS image:
 
 - SSH into the VM.
+- Set environment variable for domain, e.g.:
+- `export ROCKETCHAT_DOMAIN=chat.example.com`
 - `sudo apt-get update -y && sudo apt-get install git python3 python3-setuptools python3-pip software-properties-common -y`
 - `sudo apt-add-repository -y --update ppa:ansible/ansible`
-- `sudo apt-get install ansible`
+- `sudo apt-get install ansible -y`
 - `pip3 install --upgrade pip setuptools`
 - `git clone https://github.com/tomnz/rocketchat-ansible-docker.git`
 - `cd rocketchat-ansible-docker`
 - `ansible-galaxy install -r requirements.yml`
-- `ansible-playbook -v -i hosts.yml playbook.yml`
+- `ansible-playbook -v -i hosts.yml playbook.yml --extra-vars "{\"rocketchat_domain\": \"${ROCKETCHAT_DOMAIN}\"]}"`
 
 ## Updating
 
