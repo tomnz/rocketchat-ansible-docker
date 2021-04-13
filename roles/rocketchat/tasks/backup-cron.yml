@@ -1,0 +1,14 @@
+---
+
+- name: Configure cron for hourly database backups
+  cron:
+    minute: "0"
+    hour: "*"
+    name: mongo_backup
+    job: "docker exec `docker ps -q --filter ancestor=mongo` 'mongodump --oplog --archive=/dump/backup-$(date +\%Y\%m\%d\%H\%M\%S).gz'"
+
+- name: Cleanup old database backups once per day
+  cron:
+    minute: "0"
+    hour: "1"
+    job: "find /data/docker/mongo/data/dump/* -mtime +90 -exec rm -rf {} \;"
