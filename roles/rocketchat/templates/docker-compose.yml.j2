@@ -32,7 +32,7 @@ services:
       - "{{ mongo_data }}/data/db:/data/db"
       - "{{ mongo_data }}/data/dump:/dump"
     ports:
-      "27017:27017"
+      - "27017:27017"
 
   mongo-init-replica:
     image: mongo:{{ mongo_image_version }}
