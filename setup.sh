@@ -32,4 +32,4 @@ apt-get install ansible -y
 pip3 install --upgrade pip setuptools
 
 # Debugging tools (REMOVE?)
-apt-get install atop iotop
+apt-get install atop sysstat
