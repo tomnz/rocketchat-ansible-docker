@@ -32,9 +32,11 @@ Assuming a (fresh) standard Azure VM with an Ubuntu 18.04 LTS image:
   - `git clone https://github.com/tomnz/rocketchat-ansible-docker.git`
   - `cd rocketchat-ansible-docker`
 - Configure prerequisites (view setup.sh for details):
-  - `./setup.sh`
+  - `chmod +x setup.sh`
+  - `sudo bash -c './setup.sh'`
 - Set environment variable for domain, e.g.:
-  - `export ROCKETCHAT_DOMAIN=chat.example.com`
+  - `echo "export ROCKETCHAT_DOMAIN=chat.example.com" >> ~/.bash_profile`
+  - `source ~/.bash_profile`
 - Provision Ansible:
   - `ansible-galaxy install -r requirements.yml`
   - `ansible-playbook -v -i hosts.yml playbook.yml --extra-vars "{\"rocketchat_domain\": \"${ROCKETCHAT_DOMAIN}\"}"`
