@@ -19,4 +19,6 @@ sudo apt-get update -y && sudo apt-get install git python3 python3-setuptools py
 sudo apt-add-repository -y --update ppa:ansible/ansible
 sudo apt-get install ansible -y
 pip3 install --upgrade pip setuptools
+
+# Debugging tools (REMOVE?)
 sudo apt-get install atop iotop
