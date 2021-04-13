@@ -51,6 +51,14 @@ Assuming a (fresh) standard Azure VM with an Ubuntu 18.04 LTS image:
 - Provision Ansible:
   - `ansible-playbook -v -i hosts.yml playbook.yml --extra-vars "{\"rocketchat_domain\": \"${ROCKETCHAT_DOMAIN}\"}"`
 
+## Backups
+
+RocketChat keeps its state completely inside of Mongo, which means a reliable backup and restore option for the core Mongo database is sufficient for recovery. The Ansible configuration establishes a cron to take hourly backups of the relevant data.
+
+Data is stored using `mongodump --oplog --gzip` and saved to `/data/docker/mongo/dump/`.
+
+Restore from a backup file can be performed using `mongorestore --oplogReplay`.
+
 ## Testing with Vagrant
 
 Test the configuration (both initial setup, and further updates) locally using [Vagrant](https://www.vagrantup.com/).
