@@ -1,3 +1,7 @@
+# RocketChat Ansible Config
+
+Installs RocketChat on a given machine. Installation is Docker-based, and is designed to be self-contained in that it also configures Mongo and an HTTPS proxy.
+
 ## TODO
 
 Remaining work, in no particular order:
@@ -41,6 +45,8 @@ Assuming a (fresh) standard Azure VM with an Ubuntu 18.04 LTS image:
   - `sudo apt-add-repository -y --update ppa:ansible/ansible`
   - `sudo apt-get install ansible -y`
   - `pip3 install --upgrade pip setuptools`
+- Debugging tools (REMOVE):
+  - `sudo apt-get install atop iotop`
 - Clone this repository:
   - `git clone https://github.com/tomnz/rocketchat-ansible-docker.git`
   - `cd rocketchat-ansible-docker`
