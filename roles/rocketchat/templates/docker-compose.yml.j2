@@ -48,7 +48,6 @@ services:
     depends_on:
       - mongo
 
-{% if rocketchat_enable_swag %}
   swag:
     image: linuxserver/swag:{{ swag_image_version }}
     cap_add:
@@ -69,4 +68,3 @@ services:
       - "443:443"
     depends_on:
       - rocketchat
-{% endif %}
