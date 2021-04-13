@@ -12,5 +12,6 @@
   cron:
     minute: "0"
     hour: "1"
+    name: mongo_backup_cleanup
     job: |
       find /data/docker/mongo/data/dump/* -mtime +90 -exec rm -rf {} \;
