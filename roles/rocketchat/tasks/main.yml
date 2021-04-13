@@ -11,3 +11,5 @@
 - include_tasks: swag-setup.yml
 
 - include_tasks: compose.yml
+
+- include_tasks: backup-cron.yml
