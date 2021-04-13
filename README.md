@@ -20,26 +20,43 @@ Remaining work, in no particular order:
 
 ## Deploying
 
-Assuming a standard cloud VM with an Ubuntu 18.04 LTS image:
+Assuming a (fresh) standard Azure VM with an Ubuntu 18.04 LTS image:
 
-- SSH into the VM.
+- SSH into the VM:
+  - `ssh -i (private_key_file) (username)@(public_ip)`
+- [Partition the data disk](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/attach-disk-portal#partition-a-new-disk) and mount it:
+  - `lsblk -o NAME,HCTL,SIZE,MOUNTPOINT | grep -i "sd"`
+  - Look for the unmounted drive, typically `sdc`. Replace below as appropriate:
+  - `sudo parted /dev/sdc --script mklabel gpt mkpart xfspart xfs 0% 100%`
+  - `sudo mkfs.xfs /dev/sdc1`
+  - `sudo partprobe /dev/sdc1`
+  - `sudo mkdir /data`
+  - `sudo mount /dev/sdc1 /data`
+  - Make mount permanent over restarts (again replace `sdc` as appropriate):
+  - ```echo "UUID=`blkid -o value -s UUID /dev/sdc1` /data xfs defaults,nofail 1 2" | sudo tee -a /etc/fstab```
 - Set environment variable for domain, e.g.:
-- `export ROCKETCHAT_DOMAIN=chat.example.com`
-- `sudo apt-get update -y && sudo apt-get install git python3 python3-setuptools python3-pip software-properties-common -y`
-- `sudo apt-add-repository -y --update ppa:ansible/ansible`
-- `sudo apt-get install ansible -y`
-- `pip3 install --upgrade pip setuptools`
-- `git clone https://github.com/tomnz/rocketchat-ansible-docker.git`
-- `cd rocketchat-ansible-docker`
-- `ansible-galaxy install -r requirements.yml`
-- `ansible-playbook -v -i hosts.yml playbook.yml --extra-vars "{\"rocketchat_domain\": \"${ROCKETCHAT_DOMAIN}\"]}"`
+  - `export ROCKETCHAT_DOMAIN=chat.example.com`
+- Install prerequisites and Ansible:
+  - `sudo apt-get update -y && sudo apt-get install git python3 python3-setuptools python3-pip software-properties-common -y`
+  - `sudo apt-add-repository -y --update ppa:ansible/ansible`
+  - `sudo apt-get install ansible -y`
+  - `pip3 install --upgrade pip setuptools`
+- Clone this repository:
+  - `git clone https://github.com/tomnz/rocketchat-ansible-docker.git`
+  - `cd rocketchat-ansible-docker`
+- Provision Ansible:
+  - `ansible-galaxy install -r requirements.yml`
+  - `ansible-playbook -v -i hosts.yml playbook.yml --extra-vars "{\"rocketchat_domain\": \"${ROCKETCHAT_DOMAIN}\"}"`
 
 ## Updating
 
 - SSH into the VM.
-- `cd ~/rocketchat-ansible-docker`
-- `git pull`
-- `ansible-playbook -v -i hosts.yml playbook.yml`
+  - `ssh -i (private_key_file) (username)@(public_ip)`
+- Pull the repository:
+  - `cd ~/rocketchat-ansible-docker`
+  - `git pull`
+- Provision Ansible:
+  - `ansible-playbook -v -i hosts.yml playbook.yml --extra-vars "{\"rocketchat_domain\": \"${ROCKETCHAT_DOMAIN}\"}"`
 
 ## Testing with Vagrant
 

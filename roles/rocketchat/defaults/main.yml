@@ -2,14 +2,13 @@
 # Rocket.Chat configuration
 # Domain must be a subdomain - the first part will be split off for SWAG config
 rocketchat_domain: chat.example.com
-rocketchat_enable_swag: false
 
 # Location for docker-compose configuration
-docker_compose_config_dir: /var/docker-compose
+docker_compose_config_dir: /data/docker-compose
 docker_compose_config: "{{ docker_compose_config_dir }}/docker-compose.yml"
 
 # Primary mount point for docker data directories
-docker_data: /var/docker
+docker_data: /data/docker
 # Per-container directories
 mongo_data: "{{ docker_data }}/mongo"
 rocketchat_data: "{{ docker_data }}/rocketchat"
