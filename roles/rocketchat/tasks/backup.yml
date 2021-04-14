@@ -10,13 +10,13 @@
   file:
     path: "{{ mongo_backup }}"
     state: directory
-    mode: '0755'
+    mode: '0777'
 
 - name: Create directory for Rocketchat backup.
   file:
     path: "{{ rocketchat_backup }}"
     state: directory
-    mode: '0755'
+    mode: '0777'
 
 
 - name: Configure cron for hourly Mongo backups.
@@ -33,7 +33,7 @@
     hour: "*"
     name: rocketchat_backup
     job: |
-      docker exec `docker ps -q --filter ancestor=rocketchat` bash -c 'tar -xcf /backup/uploads-$(date +\%Y\%m\%d\%H\%M\%S).tar.gz /app/uploads'
+      docker exec `docker ps -q --filter ancestor=rocketchat/rocket.chat` bash -c 'tar -zcvf /backup/uploads-$(date +%Y%m%d%H%M%S).tar.gz /app/uploads'
 
 - name: Cleanup old Mongo backups once per day.
   cron:
