@@ -13,3 +13,11 @@
 - include_tasks: compose.yml
 
 - include_tasks: backup.yml
+
+- name: Configure nightly docker-compose update cron.
+  cron:
+    minute: "15"
+    hour: "2"
+    name: docker_compose_pull
+    job: |
+      cd /data/docker-compose && docker-compose pull && docker-compose up -d
