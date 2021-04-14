@@ -25,7 +25,7 @@
     hour: "*"
     name: mongo_backup
     job: |
-      docker exec `docker ps -q --filter ancestor=mongo` 'mongodump --oplog --archive=/backup/mongo-$(date +\%Y\%m\%d\%H\%M\%S).tar.gz'
+      docker exec `docker ps -q --filter ancestor=mongo` bash -c 'mongodump --oplog --archive=/backup/mongo-$(date +\%Y\%m\%d\%H\%M\%S).tar.gz'
 
 - name: Configure cron for hourly Rocketchat backups.
   cron:
@@ -33,7 +33,7 @@
     hour: "*"
     name: rocketchat_backup
     job: |
-      docker exec `docker ps -q --filter ancestor=rocketchat` 'tar -xcf /backup/uploads-$(date +\%Y\%m\%d\%H\%M\%S).tar.gz /app/uploads'
+      docker exec `docker ps -q --filter ancestor=rocketchat` bash -c 'tar -xcf /backup/uploads-$(date +\%Y\%m\%d\%H\%M\%S).tar.gz /app/uploads'
 
 - name: Cleanup old Mongo backups once per day.
   cron:

@@ -6,21 +6,19 @@ Installs RocketChat on a given machine. Installation is Docker-based, and is des
 
 Remaining work, in no particular order:
 
-- Configure `swag` container for HTTPS forwarding
-- Configure Ansible handlers for service up/down
 - Safe upgrades (explicit trigger with Ansible tag)
   - Docker
   - Docker Compose
   - Rocket.Chat
   - Mongo
   - Swag
-- Backups (explicit trigger with Ansible tag)
-  - Mongo data
-  - Save to remote location? Or specific mounted drive
+- Backups
+  - Save to remote location?
   - Encryption with PGP or similar?
-- Configure schedule for `git pull` and `ansible-playbook`
-  - Run upgrades
-  - Do backups
+- Harden VM
+  - Additional fail2ban configuration?
+  - Unattended system upgrades
+- Configure schedule for `git pull` and `ansible-playbook` for automatic upgrades
 
 ## Deploying
 
