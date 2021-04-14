@@ -37,7 +37,7 @@
 
 - name: Cleanup old Mongo backups once per day.
   cron:
-    minute: "0"
+    minute: "10"
     hour: "1"
     name: mongo_backup_cleanup
     job: |
@@ -45,7 +45,7 @@
 
 - name: Cleanup old Rocketchat backups once per day.
   cron:
-    minute: "0"
+    minute: "10"
     hour: "1"
     name: rocketchat_backup_cleanup
     job: |
