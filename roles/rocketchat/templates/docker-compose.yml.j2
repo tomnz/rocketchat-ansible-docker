@@ -14,6 +14,7 @@ services:
     restart: unless-stopped
     volumes:
       - "{{ rocketchat_data }}/uploads:/app/uploads"
+      - "{{ rocketchat_backup }}:/backup"
     environment:
       - PORT=3000
       - ROOT_URL=https://{{ rocketchat_domain }}:3000
@@ -30,7 +31,7 @@ services:
     restart: unless-stopped
     volumes:
       - "{{ mongo_data }}/data/db:/data/db"
-      - "{{ mongo_data }}/data/dump:/dump"
+      - "{{ mongo_backup }}:/backup"
     ports:
       - "27017:27017"
 

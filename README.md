@@ -53,11 +53,15 @@ Assuming a (fresh) standard Azure VM with an Ubuntu 18.04 LTS image:
 
 ## Backups
 
-RocketChat keeps its state completely inside of Mongo, which means a reliable backup and restore option for the core Mongo database is sufficient for recovery. The Ansible configuration establishes a cron to take hourly backups of the relevant data.
+RocketChat keeps its state completely inside of Mongo (unless uploads are configured to store on the filesystem), which means a reliable backup and restore option for the core Mongo database is sufficient for recovery. The Ansible configuration establishes a cron to take hourly backups of the relevant data.
 
-Data is stored using `mongodump --oplog --gzip` and saved to `/data/docker/mongo/dump/`.
+Data is stored using `mongodump --oplog --archive` and saved to `/data/backup/mongo`.
 
 Restore from a backup file can be performed using `mongorestore --oplogReplay`.
+
+RocketChat can be configured to use File System as storage for uploads - in this case, configure the path in RocketChat to `/app/uploads`. Any files stored there will also be saved on an hourly basis as archives in `/data/backup/rocketchat`.
+
+Old backups are cleaned up after 90 days.
 
 ## Testing with Vagrant
 

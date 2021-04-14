@@ -12,9 +12,3 @@
     path: "{{ mongo_data }}/data/db"
     state: directory
     mode: '0755'
-
-- name: Create directory for Mongo container data (dump).
-  file:
-    path: "{{ mongo_data }}/data/dump"
-    state: directory
-    mode: '0755'
