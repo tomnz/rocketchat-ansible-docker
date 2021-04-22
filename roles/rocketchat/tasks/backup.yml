@@ -25,7 +25,7 @@
     hour: "*"
     name: mongo_backup
     job: |
-      docker exec `docker ps -q --filter ancestor=mongo` bash -c 'mongodump --oplog --archive=/backup/mongo-$(date +\%Y\%m\%d\%H\%M\%S).tar.gz'
+      docker exec `docker ps -q --filter ancestor=mongo` bash -c 'mongodump --oplog --gzip --archive=/backup/mongo-$(date +\%Y\%m\%d\%H\%M\%S).gz'
 
 - name: Configure cron for hourly Rocketchat backups.
   cron:
