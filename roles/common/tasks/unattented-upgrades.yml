@@ -1,0 +1,6 @@
+---
+- name: Ensure unattended-upgrades is installed.
+  package:
+    name: unattended-upgrades
+    state: latest
+
