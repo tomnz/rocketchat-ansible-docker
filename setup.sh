@@ -6,7 +6,7 @@
 # Exit on error
 set -e
 
-if [ -z "$SKIP_DATA" ]
+if [ ! -d "/data" ]
 then
 	# Find data drive
 	DATA_DRIVE=$(sudo lsscsi *:*:*:10 | sed -r 's:[^\]+(\/dev\/[a-z0-9]+).*$:\1:')
@@ -28,7 +28,7 @@ then
 	echo "UUID=`blkid -o value -s UUID ${DATA_PART}`	/data	xfs	defaults,nofail	1	2" | tee -a /etc/fstab
 fi
 
-if [ -z "$SKIP_BACKUP" ]
+if [ ! -d "/backup" ]
 then
 	# Find data drive
 	BACKUP_DRIVE=$(sudo lsscsi *:*:*:11 | sed -r 's:[^\]+(\/dev\/[a-z0-9]+).*$:\1:')
