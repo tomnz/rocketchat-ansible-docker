@@ -14,7 +14,7 @@ mongo_data: "{{ docker_data }}/mongo"
 rocketchat_data: "{{ docker_data }}/rocketchat"
 swag_data: "{{ docker_data }}/swag"
 
-backup_data: /data/backup
+backup_data: /backup
 backup_retention_days: "90"
 mongo_backup: "{{ backup_data }}/mongo"
 rocketchat_backup: "{{ backup_data }}/rocketchat"
