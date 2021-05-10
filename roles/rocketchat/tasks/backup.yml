@@ -18,6 +18,11 @@
     state: directory
     mode: '0777'
 
+- name: Configure Mongo backup script.
+  template:
+    src: mongo-backup.sh.j2
+    dest: "{{ backup_data }}/mongo-backup.sh"
+    mode: 'u+rwx'
 
 - name: Configure cron for hourly Mongo backups.
   cron:
@@ -25,7 +30,7 @@
     hour: "*"
     name: mongo_backup
     job: |
-      docker exec `docker ps -q --filter ancestor=mongo` bash -c 'mongodump --oplog --gzip --archive=/backup/mongo-$(date +\%Y\%m\%d\%H\%M\%S).gz'
+      {{ backup_data }}/mongo_backup.sh
 
 - name: Configure cron for hourly Rocketchat backups.
   cron:
@@ -33,9 +38,9 @@
     hour: "*"
     name: rocketchat_backup
     job: |
-      docker exec `docker ps -q --filter ancestor=rocketchat/rocket.chat` bash -c 'tar -zcvf /backup/uploads-$(date +\%Y\%m\%d\%H\%M\%S).tar.gz /app/uploads'
+      docker exec `docker ps -q --filter ancestor=rocketchat/rocket.chat` bash -c 'tar -zcvf /backup/uploads-$(date +\%Y-\%m-\%d_\%Hh\%Mm\%Ss).tar.gz /app/uploads'
 
-- name: Cleanup old Mongo backups once per day.
+- name: Clean up old Mongo backups once per day.
   cron:
     minute: "10"
     hour: "1"
@@ -43,9 +48,9 @@
     job: |
       find {{ mongo_backup }}/* -mtime +{{ backup_retention_days }} -exec rm -rf {} \;
 
-- name: Cleanup old Rocketchat backups once per day.
+- name: Clean up old Rocketchat backups once per day.
   cron:
-    minute: "10"
+    minute: "20"
     hour: "1"
     name: rocketchat_backup_cleanup
     job: |
