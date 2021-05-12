@@ -38,7 +38,7 @@
     hour: "*"
     name: rocketchat_backup
     job: |
-      docker exec `docker ps -q --filter ancestor=rocketchat/rocket.chat` bash -c 'tar -zcvf /backup/uploads-$(date +\%Y-\%m-\%d_\%Hh\%Mm\%Ss).tar.gz /app/uploads'
+      docker exec `docker ps -q --filter ancestor=rocketchat/rocket.chat:{{ rocketchat_image_version }}` bash -c 'tar -zcvf /backup/app-$(date +\%Y-\%m-\%d_\%Hh\%Mm\%Ss).tar.gz /app'
 
 - name: Clean up old Mongo backups once per day.
   cron:
