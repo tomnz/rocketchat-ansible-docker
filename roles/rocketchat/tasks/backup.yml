@@ -30,7 +30,7 @@
     hour: "*"
     name: mongo_backup
     job: |
-      {{ backup_data }}/mongo_backup.sh
+      {{ backup_data }}/mongo-backup.sh
 
 - name: Configure cron for hourly Rocketchat backups.
   cron:
