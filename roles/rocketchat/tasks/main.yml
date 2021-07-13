@@ -20,4 +20,4 @@
     hour: "2"
     name: docker_compose_pull
     job: |
-      cd /data/docker-compose && docker-compose pull && docker-compose up -d
+      cd {{ docker_compose_config_dir }} && /usr/local/bin/docker-compose pull && /usr/local/bin/docker-compose up -d
