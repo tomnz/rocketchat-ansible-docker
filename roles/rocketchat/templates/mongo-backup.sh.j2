@@ -7,6 +7,6 @@ backup_file="{{ mongo_backup }}/mongo-${backup_date}.tar.gz"
 mkdir -p ${backup_dir}
 # Run backup from inside container - note that /backup in the container
 # corresponds to /backup/mongodb on host
-docker exec `docker ps -q --filter ancestor=mongo:{{ mongo_image_version }}` bash -c 'mongodump --oplog -o /backup/${backup_date} -v > /backup/${backup_date}/mongodump.log'
+docker exec `docker ps -q --filter ancestor=mongo:{{ mongo_image_version }}` bash -c "mongodump --oplog -o /backup/${backup_date} -v > /backup/${backup_date}/mongodump.log"
 tar zcvf ${backup_file} ${backup_dir}
 rm -rf ${backup_dir}
