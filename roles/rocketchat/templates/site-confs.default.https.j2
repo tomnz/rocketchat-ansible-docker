@@ -26,8 +26,6 @@ server {
 
         add_header Referrer-Policy "same-origin" always;
         add_header Strict-Transport-Security "max-age=63072000; includeSubDomains; preload" always;
-        add_header X-Content-Type-Options "nosniff" always;
-        add_header X-XSS-Protection "1; mode=block" always;
 
         set $upstream_app rocketchat;
         set $upstream_port 3000;
